@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.20/p5.min.js"></script>
+    <link rel="stylesheet" href="/static/styles/ourstyles.css">
+    <script src="/static/scripts/navbar.js"></script>
+    <script src="/static/scripts/search.js"></script>
+    <title>Where RU</title>
+</head>
+<body>
+    <nav class="navbar is-link">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            WHERE RU
+          </a>
+          <div class="navbar-burger" data-target="navbar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      
+        <div id="navbar" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="/map">
+              Campus map
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Floor plans
+              </a>
+              <div class="navbar-dropdown">
+                {% for building in buildings %}
+                <a class="navbar-item" href="/building{{ building.url }}">{{ building.title }}</a>
+                {% endfor %}
+              </div>
+            </div>
+            <a class="navbar-item" href="/">
+              Navigate
+            </a>
+          </div>
+      
+          <div class="navbar-end">
+            <!-- <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href="/search">
+                  <strong>Search</strong>
+                </a>
+                <a class="button is-light" href="/login">
+                  Log in
+                </a>
+              </div>
+            </div> -->
+            <div class="navbar-item has-dropdown is-hoverable">
+              <div class="navbar-item">
+                <div class="control has-icons-right">
+                  <input class="input" type="text" placeholder="Search" id="navbar-search">
+                  <span class="icon is-small is-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="navbar-dropdown" style="padding: 0em;">
+                <div class="dropdown-content" id="navbar-dropdown" style="display: none;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <main>
+        <div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered">
+                    Search for a room
+                </h1>
+                <container class="columns is-mobile">
+                    <div class="column is-10 is-offset-1">
+                        <div class="field">
+                            <div class="dropdown is-active">
+                                <div class="dropdown-trigger">
+                                    <div class="control has-icons-right">
+                                        <input class="input is-rounded" type="text" placeholder="Search for a place"/ id="main-search">
+                                        <span class="icon is-small is-right">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-content" id="main-dropdown">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </container>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div class="navigate">
+        <section class="hero is-small">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        Navigate
+                    </h1>
+                    <!-- <h2 class="subtitle"> </h2> -->
+                </div>
+            </div>
+        </section>
+        <container class="columns is-mobile">
+            <div class="column is-10 is-offset-1">
+                <div class="container">
+                    <form action="{% url 'home' %}" method="get" id="navigate-form">
+                        <!-- {% csrf_token %} -->
+                        <div class="field has-addons has-addons-centered">
+                            <p class="control has-icons-left">
+                                <input class="input is-rounded" type="text" placeholder="From" name="start_room">
+                                    <span class="icon is-small is-left">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                    </span>
+                                </p>
+                                <p class="control has-icons-left">
+                                    <input class="input is-rounded" type="text" placeholder="To" name="end_room">
+                                        <span class="icon is-small is-left">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                            </svg>
+                                        </span>
+                                    </p>
+                                    <p class="control">
+                                        <button class="button is-primary is-rounded" type="submit">
+                                            Find your way
+                                        </button>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </container>
+            {% include './components/zoombuttons.html' %}
+            <div id="p5jscanvas" style="width: 90%; height: 800px; margin: 0 auto;">
+                <script src="/static/scripts/floormaps.js"></script>
+                <script defer>
+                    document.getElementById("navigate-form").addEventListener("submit", function(event) {
+                        event.preventDefault(); 
+                        
+                        var formElement = document.getElementById("navigate-form");
+                        var formData = new FormData(formElement);
+                        var searchParams = new URLSearchParams(formData).toString();
+                        // Make a call to the API endpoint
+                        fetch("/api/path?" + searchParams)
+                            .then(function(response) {
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                // Handle the response data
+                                pathVertexIds = data.path_vertex_ids;
+                                if (pathVertexIds && pathVertexIds.length >= 2) {
+                                    centerView = true;
+                                    if (floor != null) drawPathFromTo(pathVertexIds);
+                                    console.log(pathVertexIds);
+                                        console.log("Path found!");
+                                } else {
+                                    alert("No path was found. Are you sure these rooms exist?");
+                                }
+                            })
+                            .catch(function(error) {
+                                console.error("Error:", error);
+                            });
+                    });
+                </script>
+            </div>
+        </div>
+    {% endblock %}
